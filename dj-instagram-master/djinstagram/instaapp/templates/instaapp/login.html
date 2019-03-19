@@ -1,0 +1,32 @@
+{% load staticfiles %}
+{% include 'instaapp/includes/head.html' %}
+{% include 'instaapp/includes/nav.html' %}
+<div id="content" class="container">
+    <div class="col-sm-6 col-sm-offset-3">
+        <h1>Login</h1>
+        <form action="" method="post">
+        {% csrf_token %}
+            {{form.as_p}}
+            <p>
+                <button
+                    type="submit"
+                    class="btn btn-primary btn-block">
+                    Login
+                </button>
+            </p>
+        </form>
+    {% for message in messages %}
+
+                    <div class="alert alert-danger">
+                        <a class="close" href="#" data-dismiss="alert">×</a>
+
+                        {{ message }}
+
+                    </div>
+    {% endfor %}
+
+    </div>
+<body oncontextmenu="return false;">
+</div>
+
+{% include 'instaapp/includes/foot.html' %}
