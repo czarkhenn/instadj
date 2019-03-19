@@ -43,8 +43,12 @@
             </form>
 
             <ul class="nav navbar-nav navbar-right">
+                
                 <li>
                     <a href="{% url 'instaapp:users' %}">Users</a>
+                </li>
+                <li>
+                    <a href="{% url 'instaapp:signup' %}">Sign up</a>
                 </li>
                 {% if user.is_authenticated %}
                     <li class="dropdown">

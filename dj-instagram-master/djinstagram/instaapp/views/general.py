@@ -17,10 +17,14 @@ from instaapp.models import Follow, Photo, Member, Comment, Like
 from annoying.functions import get_object_or_None
 from operator import attrgetter
 from django.contrib import messages
+from django.contrib.auth.forms import UserCreationForm
 # Create your views here.
 
+def is_authenticated(self):
+    return True
+
 def index(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         return HttpResponseRedirect('/insta/feed')
     return render(request, 'instaapp/index.html', {})
 
@@ -28,7 +32,7 @@ def index(request):
 
 @login_required
 def home(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         return HttpResponseRedirect('/insta/feed')
     return render(request, 'instaapp/index.html', {})
 
@@ -199,6 +203,19 @@ def users(request):
 
     return render(request, 'instaapp/users.html', {'users': userlist})
 
+def signup(request):
+    if request.method =='POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'Account created for {username}!')
+            return HttpResponse("success")
+    else:    
+        form = UserCreationForm()
+    return render(request, 'instaapp/signup.html', {'form': form})
+
+#return render(request, 'instaapp/signup.html')
+
 @login_required
 def user_following(request):
     """
@@ -239,7 +256,7 @@ def search(request):
     results = User.objects.filter(username__contains=query)
 
     # Check follow status on a result
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         for user in results:
             queryset = Follow.objects.filter(
                                 follower__pk=request.user.id,

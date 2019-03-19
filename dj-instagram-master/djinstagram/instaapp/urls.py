@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^logout/$', general.user_logout, name='user_logout'),
     url(r'^upload/$', general.upload_photo, name='upload_photo'),
     url(r'^users/$', general.users, name='users'),
+    url(r'^signup/$', general.signup, name='signup'),
     url(r'^u/(?P<username>[\w-]+)$', general.user_profile, name='user_view'),
     url(r'^profile/$', general.user_profile, name='user_profile'),
     url(r'^following/$', general.user_following, name='user_following'),
