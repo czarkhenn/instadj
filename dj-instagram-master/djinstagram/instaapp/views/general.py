@@ -21,6 +21,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import UserRegisterForm
 from django.contrib.auth import get_user_model
 
+
 # Create your views here.
 
 def is_authenticated(self):
@@ -83,11 +84,13 @@ def user_login(request):
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(username=username, password=password)
+
         if user is not None:
             login(request, user)
             return HttpResponseRedirect('/insta')
+
         else:
-            messages.error(request,'Incorrect Username or Password ')
+            messages.error(request,'Incorrect Account or Does Not Exist')
             #return HttpResponse('Invalid Login')
 
     else:
@@ -148,16 +151,16 @@ def user_profile(request, username=None):
     user_photos = Photo.objects.filter(owner__pk=user.id)
     photos_count = user_photos.count()
 
-    if user_dp is False:
-        return render(request, 'instaapp/profile.html', {
-            'user': user,
-            'user_dp': user_dp,
-            'photos': user_photos,
-            'count': photos_count,
-            'dp_form': upload_prof_pic_form
-            })
-    else:
-        return HttpResponseRedirect('/insta/feed')
+    #if user_dp is False:
+       # return render(request, 'instaapp/profile.html', {
+           # 'user': user,
+          #  'user_dp': user_dp,
+          #  'photos': user_photos,
+          #  'count': photos_count,
+         #   'dp_form': upload_prof_pic_form
+           # })
+   # else:
+       # return HttpResponseRedirect('/insta/feed')
 
 def viewprofile(request, username=None):
     upload_prof_pic_form = MemberPhotoForm()

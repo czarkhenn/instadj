@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
-    User.is_superuser = True
+    
 
     class Meta:
         model = User

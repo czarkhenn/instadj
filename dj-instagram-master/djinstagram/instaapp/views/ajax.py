@@ -92,9 +92,8 @@ def upload_user_profile_pic(request):
 
             if existing_dp is not None:
                 obj.id = existing_dp.id
-
             obj.save()
-            #return HttpResponseRedirect('/insta/viewprofile')
+            
             
 
             data['status'] = 1

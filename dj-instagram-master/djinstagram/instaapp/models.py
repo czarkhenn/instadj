@@ -46,6 +46,7 @@ class Member(models.Model):
 
     def __str__(self):
         return self.user.username
+    
 
 class Like(models.Model):
     owner = models.ForeignKey(Member, null=True, on_delete=models.CASCADE)
