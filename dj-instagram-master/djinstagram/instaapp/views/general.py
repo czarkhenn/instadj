@@ -18,6 +18,9 @@ from annoying.functions import get_object_or_None
 from operator import attrgetter
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
+from .forms import UserRegisterForm
+from django.contrib.auth import get_user_model
+
 # Create your views here.
 
 def is_authenticated(self):
@@ -205,13 +208,16 @@ def users(request):
 
 def signup(request):
     if request.method =='POST':
-        form = UserCreationForm(request.POST)
+        form = UserRegisterForm(request.POST)
+ 
         if form.is_valid():
+            form.save()
             username = form.cleaned_data.get('username')
-            messages.success(request, f'Account created for {username}!')
-            return HttpResponse("success")
+            return HttpResponseRedirect('/insta/login')
+        else:
+            messages.error(request, 'Check For Errors')
     else:    
-        form = UserCreationForm()
+        form = UserRegisterForm()
     return render(request, 'instaapp/signup.html', {'form': form})
 
 #return render(request, 'instaapp/signup.html')

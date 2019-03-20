@@ -23,7 +23,7 @@ def follow_user(request):
     data = {
             'status': 0,
         }
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         if request.method == 'POST':
             follower = User.objects.get(pk=request.user.id)
             following = User.objects.get(pk=request.POST['uid'])

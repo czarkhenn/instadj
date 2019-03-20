@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'crispy_forms',
     'instaapp.apps.InstaappConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -125,3 +126,5 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/uploads/'
 
 LOGIN_URL = '/insta/login/'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
