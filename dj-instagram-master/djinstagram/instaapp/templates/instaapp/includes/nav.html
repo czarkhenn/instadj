@@ -47,9 +47,13 @@
                 <li>
                     <a href="{% url 'instaapp:users' %}">Users</a>
                 </li>
+                {% if user.is_authenticated %}
+               
+                {% else %}
                 <li>
-                    <a href="{% url 'instaapp:signup' %}">Sign up</a>
-                </li>
+                        <a href="{% url 'instaapp:signup' %}">Sign up</a>
+                    </li>
+                {% endif %}
                 {% if user.is_authenticated %}
                     <li class="dropdown">
                         <a

@@ -53,7 +53,7 @@ def unfollow_user(request):
             # check if logged user is following the selected user
             follower = User.objects.get(pk=request.user.id)
             following = User.objects.get(pk=request.POST['uid'])
-
+            
             follow_obj = get_object_or_None(Follow,
                                     follower=follower,
                                     following=following,
@@ -62,8 +62,9 @@ def unfollow_user(request):
 
             # if is following, update `active` field to False
             if follow_obj is not None:
+                
                 follow_obj.active = False
-                resp = follow_obj.save()
+                follow_obj.save()
                 # after a successful unfollow, update `data` variable's status to 1
                 data['status'] = 1
 
