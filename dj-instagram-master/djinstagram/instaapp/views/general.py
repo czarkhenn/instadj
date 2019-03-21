@@ -11,6 +11,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
+from django.core.exceptions import MultipleObjectsReturned
+
 from instaapp.forms import LoginForm, PhotoForm, MemberPhotoForm
 from instaapp.models import Follow, Photo, Member, Comment, Like
 
@@ -246,6 +248,7 @@ def user_following(request):
 
     following = Follow.objects.filter(follower__pk=user.id, active=True)
     
+    
 
     
 
@@ -259,6 +262,9 @@ def user_followers(request):
     """
     View to display a list of users who follow the `logged user`
     """
+
+
+
     followers = Follow.objects.filter(following__pk=request.user.id)
 
     # Check if you follow the users who follow you
@@ -268,6 +274,14 @@ def user_followers(request):
             following__id=user.follower.id
             )
         user.is_followed = get_object_or_None(queryset)
+    # x = User.objects.get(pk=request.user.id)
+    # y = User.objects.get(pk=request.POST['uid'])
+    # try:
+    #     follow_obj = Follow.objects.get(follower=x, following=y)
+    #     follow_obj.save()
+    # except MultipleObjectsReturned:
+    #     pass
+    
 
 
     return render(request, 'instaapp/user_followers.html', {

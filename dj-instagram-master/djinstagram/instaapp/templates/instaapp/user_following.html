@@ -9,13 +9,14 @@
                 <div class="row">
                     <div class="well">
                         <img class="img-circle" src="{% static "instaapp/img/30avatar.png" %}" alt="following avatar">
-                        <span>{{user.following}}</span>
+                        <span>{{user.following}}</span>        
                         <button
                             data-user="{{user.following.id}}"
-                            class="btn btn-primary pull-right btn-following" method='POST' type="submit">
+                            class="btn btn-primary pull-right btn-following" >
                             <span class="glyphicon glyphicon-ok"></span>
                             <span class="text">Following</span>
                         </button>
+                    
                     </div>
                 </div>
             </div>

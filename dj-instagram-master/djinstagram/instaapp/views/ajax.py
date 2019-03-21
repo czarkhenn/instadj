@@ -37,7 +37,7 @@ def follow_user(request):
                 'follower': request.user.id,
                 'to_follow': request.POST['uid']
             }
-
+            
     data = json.dumps(data)
     return HttpResponse(data, content_type='application/json')
 
@@ -48,24 +48,26 @@ def unfollow_user(request):
     data = {
         'status': 0,
     }
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         if request.method == 'POST':
             # check if logged user is following the selected user
-            follower = User.objects.get(pk=request.user.id)
-            following = User.objects.get(pk=request.POST['uid'])
+            x = User.objects.get(pk=request.user.id)
+            y = User.objects.get(pk=request.POST['uid'])
             
-            follow_obj = get_object_or_None(Follow,
-                                    follower=follower,
-                                    following=following, 
-                                    active=True
-                                    )
-
-            # if is following, update `active` field to False
-            if follow_obj is not None:
-                follow_obj.active = False
-                follow_obj.save()
-                # after a successful unfollow, update `data` variable's status to 1
+            # follow_obj = get_object_or_None(Follow,
+            #                         follower=follower,
+            #                         following=following, 
+            #                         active=True
+            #                         )
+            try:
+                follow_obj = Follow.objects.get(follower=x, following=y)
+                follow_obj.delete()
                 data['status'] = 1
+               
+               
+            except Follow.DoesNotExist:
+                pass
+
 
     data = json.dumps(data)
     return HttpResponse(data, content_type='application/json')
