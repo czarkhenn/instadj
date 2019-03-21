@@ -10,10 +10,14 @@
             </button>
             <a class="navbar-brand" href="{% url 'instaapp:home' %}"></a>
         </div>
-
+        {% if user.is_authenticated %}
+               
+        
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
+
+                    
                 <li>
                     <a href="{% url 'instaapp:user_following' %}">
                     Following
@@ -41,7 +45,9 @@
                 </div>
                 <button type="submit" class="btn btn-default">Submit</button>
             </form>
+            {% else %}
 
+        {% endif %}
             <ul class="nav navbar-nav navbar-right">
                 
                 <li>
@@ -49,7 +55,7 @@
                 </li>
                 {% if user.is_authenticated %}
                
-                {% else %}
+                {% else %} 
                 <li>
                         <a href="{% url 'instaapp:signup' %}">Sign up</a>
                     </li>
@@ -66,7 +72,10 @@
 
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="{% url 'instaapp:viewprofile' %}">Profile</a>
+                                <a href="{% url 'instaapp:viewprofile' %}">Upload Profile Picture</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'instaapp:otherprofile' %}">View Profile</a>
                             </li>
                             <li>
                                 <a href="{% url 'instaapp:upload_photo' %}">Upload a Photo</a>

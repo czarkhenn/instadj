@@ -79,6 +79,10 @@ $(document).ready(function() {
   $('.btn-following')
                     .hover(followingHoverIn, followingHoverOut)
                     .click(followingClick);
+                
+
+                    
 
 
 }); // document ready
+

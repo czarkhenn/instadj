@@ -10,8 +10,8 @@
                     <div class="row">
                         <div class="well">
                             <img class="img-circle" src="{% static "instaapp/img/30avatar.png" %}" alt="following avatar">
-                            <span>{{user.follower}}</span>
-                            <span class="text-danger">{{user.tae}}</span>
+                            <span>{{ user.follower }}</span>
+                            <span class="text-danger">{{ user.tae }}</span>
                             {% if user.is_followed %}
                                 <button class="btn btn-success pull-right disabled">
                                     <span class="glyphicon glyphicon-ok"></span>

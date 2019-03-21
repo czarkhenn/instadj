@@ -21,4 +21,24 @@ $(document).ready(function() {
         console.log(responseText);
         console.log(xhr);
     }
+    function UploadClick(e) {
+        e.preventDefault();
+    
+        var t = $(this),
+        user_to_unfollow = t.data('user');
+    
+        $.ajax({
+          url: '/insta/viewprofile/',
+          data: {uid: user_to_unfollow},
+          dataType: 'json',
+          type: 'post',
+          success: function(data) {
+            if (data.status == 1) {
+              window.location.reload();
+            } else {
+              $('#notLoggedInModal').modal('show');
+            }
+          }
+        });
+      }
 });

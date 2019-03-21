@@ -37,8 +37,17 @@ def index(request):
 @login_required
 def home(request):
     if request.user.is_authenticated:
-        return HttpResponseRedirect('/insta/feed')
-    return render(request, 'instaapp/index.html', {})
+        user = User.objects.get(pk=request.user.id)
+
+        memberphoto = get_object_or_None(Member, user=user)
+        if memberphoto is not None:
+            return HttpResponseRedirect('/insta/feed')
+        else:
+            messages.error(request,'Please add your Profile Picture first')
+            
+       
+
+    return render(request, 'instaapp/feed.html', {})
 
 
 
@@ -119,9 +128,9 @@ def upload_photo(request):
             obj.owner = uploader
             obj.save()
             form = PhotoForm()
-
-            #return HttpResponseRedirect('/insta/upload')
-            messages.error(request,'Successfully Uploaded! ')
+            messages.success(request,'Successfully Uploaded! ')
+            return HttpResponseRedirect('/insta/upload')
+        
 
     else:
         form = PhotoForm()
@@ -150,6 +159,7 @@ def user_profile(request, username=None):
 
     user_photos = Photo.objects.filter(owner__pk=user.id)
     photos_count = user_photos.count()
+    
 
     #if user_dp is False:
        # return render(request, 'instaapp/profile.html', {
@@ -214,7 +224,8 @@ def signup(request):
         form = UserRegisterForm(request.POST)
  
         if form.is_valid():
-            form.save()
+            instance = form.save(commit=False)
+            instance.save()
             username = form.cleaned_data.get('username')
             return HttpResponseRedirect('/insta/login')
         else:
@@ -230,13 +241,18 @@ def user_following(request):
     """
     View to display a list of users that the `logged user` is following
     """
+        
     user = request.user
 
     following = Follow.objects.filter(follower__pk=user.id, active=True)
+    
+
+    
 
     return render(request, 'instaapp/user_following.html', {
         'following': following
         })
+
 
 @login_required
 def user_followers(request):
@@ -276,8 +292,37 @@ def search(request):
 
             if follow_status is not None:
                 followlist.append(user.id)
+            
 
     return render(request, 'instaapp/search.html', {
         'results': results,
         'followlist': followlist
+        })
+
+def otherprofile(request, username=None):
+
+    #upload_prof_pic_form = MemberPhotoForm()
+
+    if username is None:
+        user = request.user
+
+    else:
+        user = User.objects.get(username=username)
+
+    dp_obj = get_object_or_None(Member, user__pk=user.id)
+    if dp_obj is None:
+        user_dp = False
+    else:
+        user_dp = dp_obj
+
+    user_photos = Photo.objects.filter(owner__pk=user.id)
+    photos_count = user_photos.count()
+
+    
+    return render(request, 'instaapp/otherprofile.html', {
+        'user': user,
+        'user_dp': user_dp,
+        'photos': user_photos,
+        'count': photos_count,
+        #'dp_form': upload_prof_pic_form
         })

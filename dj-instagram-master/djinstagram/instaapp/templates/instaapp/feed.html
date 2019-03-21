@@ -3,7 +3,17 @@
 {% include 'instaapp/includes/nav.html' %}
 <body oncontextmenu="return false;">
 <div id="content" class="container">
+
     <div class="col-sm-6 col-sm-offset-3">
+            {% for message in messages %}
+            <div class="alert alert-danger">
+                <center><a class="close" href="#" data-dismiss="alert">×</a>
+    
+                {{ message }}
+            </center>
+    
+            </div> 
+            {% endfor %}
         <h1>Feed</h1>
         {% if photos %}
             {% for photo in photos %}

@@ -56,13 +56,12 @@ def unfollow_user(request):
             
             follow_obj = get_object_or_None(Follow,
                                     follower=follower,
-                                    following=following,
+                                    following=following, 
                                     active=True
                                     )
 
             # if is following, update `active` field to False
             if follow_obj is not None:
-                
                 follow_obj.active = False
                 follow_obj.save()
                 # after a successful unfollow, update `data` variable's status to 1
@@ -98,10 +97,13 @@ def upload_user_profile_pic(request):
             
 
             data['status'] = 1
+            
 
     data = json.dumps(data)
+    messages.success(request,'Successfully Uploaded!')
     return HttpResponse(data, content_type='application/json')
-    messages.error(request,'Successfully Uploaded!')
+    return HttpResponseRedirect('/insta/viewprofile')
+    
 
 def post_photo_comment(request):
     data = {
