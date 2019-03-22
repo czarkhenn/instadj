@@ -6,6 +6,7 @@ import json, itertools
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 
+from django.core.exceptions import MultipleObjectsReturned
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
@@ -27,16 +28,21 @@ def follow_user(request):
         if request.method == 'POST':
             follower = User.objects.get(pk=request.user.id)
             following = User.objects.get(pk=request.POST['uid'])
-
-            follow = Follow(follower=follower, following=following)
-            follow.save()
+            try:
+                follow = Follow(follower=follower, following=following)
+                follow.save()
+               
+            except Follow.MultipleObjectsReturned:
+                pass
+        
+            data = {
+                    'status': 1,
+                    'follower': request.user.id,
+                    'to_follow': request.POST['uid']
+                }
 
             # data to be returned as json
-            data = {
-                'status': 1,
-                'follower': request.user.id,
-                'to_follow': request.POST['uid']
-            }
+
             
     data = json.dumps(data)
     return HttpResponse(data, content_type='application/json')
@@ -59,15 +65,21 @@ def unfollow_user(request):
             #                         following=following, 
             #                         active=True
             #                         )
-            try:
-                follow_obj = Follow.objects.get(follower=x, following=y)
-                follow_obj.delete()
-                data['status'] = 1
+            for zzz in Follow.objects.all(): 
+                try:
+                    follow_obj = Follow.objects.get(follower=x, following=y)
+                    follow_obj.delete()
+                    data['status'] = 1
                
                
-            except Follow.DoesNotExist:
-                pass
-
+                except Follow.DoesNotExist:
+                    pass
+                except Follow.MultipleObjectsReturned:
+                    dups = Follow.objects.filter(follower=x, following=y)
+                    perm = dups[0]
+                    for dup in dups[1:]:
+                        dup.delete()
+                        data['status'] = 1
 
     data = json.dumps(data)
     return HttpResponse(data, content_type='application/json')
@@ -112,7 +124,7 @@ def post_photo_comment(request):
         'status': 0
     }
 
-    if request.user.is_authenticated() and request.method == 'POST':
+    if request.user.is_authenticated and request.method == 'POST':
         post_data = request.POST
 
         photo = get_object_or_None(Photo, pk=post_data['photo_id'])
@@ -133,7 +145,7 @@ def like_photo(request):
     }
 
     # TODO: Check if like already exists
-    if request.user.is_authenticated() and request.method == 'POST':
+    if request.user.is_authenticated and request.method == 'POST':
         post_data = request.POST
 
         photo = get_object_or_None(Photo, pk=post_data['photo_id'])

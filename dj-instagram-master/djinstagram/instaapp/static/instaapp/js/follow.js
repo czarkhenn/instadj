@@ -24,6 +24,7 @@ $(document).ready(function() {
     });
   });
 
+  
   /*
   * .btn-following Events
   * This button is found in the page where the logged user can view

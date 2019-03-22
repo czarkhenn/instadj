@@ -1,5 +1,5 @@
 from django import forms
-from .models import Photo, Member
+from .models import Photo, Member, Suggestion
 
 class LoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(
@@ -29,3 +29,8 @@ class MemberPhotoForm(forms.ModelForm):
     class Meta:
         model = Member
         fields = ('image',)
+
+class SuggestForm(forms.Form):
+    class Meta:
+        model = Suggestion
+        fields = ('suggestperson')

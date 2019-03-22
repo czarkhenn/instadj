@@ -19,17 +19,17 @@
                 <span>{{count}} posts</span>
             </div>
         </div>
+<br>
+
+    <h3>Suggestions:</h3>
+    
+
+<br>
         <div class="row">
-                {% for message in messages %}
-
-    <div class="alert alert-success">
-                    <a class="close" href="#" data-dismiss="alert">×</a>
-
-                    {{ message }}
-
-    </div>
-             {% endfor %}        
+            
+                  
             <hr>
+            
             {% for photo in photos %}
                 <div class="col-sm-3">
                     <img class="img-responsive img-rounded" src="{{ MEDIA_URL }}{{photo.image.url}}" alt="{{photo.caption}}" title="{{photo.caption}}"/>

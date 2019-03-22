@@ -66,7 +66,8 @@
                             </span>
 
                             {# Comment text box #}
-                            <form
+                            <form 
+                                onsubmit="return false"
                                 method="post"
                                 action="{% url 'instaapp:post_photo_comment' %}"
                                 class="comment-form">
@@ -118,3 +119,4 @@
 {% include 'instaapp/includes/foot.html' %}
 <script src="{% static "instaapp/js/jquery.form.min.js" %}"></script>
 <script src="{% static "instaapp/js/photo-user-actions.js" %}"></script>
+

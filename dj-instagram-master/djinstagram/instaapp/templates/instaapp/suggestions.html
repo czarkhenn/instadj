@@ -1,0 +1,26 @@
+{% load staticfiles %}
+{% include 'instaapp/includes/head.html' %}
+{% include 'instaapp/includes/nav.html' %}
+
+<div class="content-section container" >
+    <h3>Add Suggestion</h3>
+
+                            <form 
+                                onsubmit="return false"
+                                method="post"
+                                action="{% url 'instaapp:suggest' %}"
+                                class="comment-form">
+                            {% csrf_token %}
+
+                                <input
+                                    name="comment_text"
+                                    type="text"
+                                    class="form-control"
+                                    
+                                    placeholder="Add suggested users here..."
+                                    aria-describedby="sizing-addon3" 
+                                    style="height:150px;font-size:14pt;"/>
+                            </form>
+                            
+                        </div>
+{% include 'instaapp/includes/foot.html' %}

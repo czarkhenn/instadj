@@ -69,3 +69,11 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.text
+
+class Suggestion(models.Model):
+
+    suggestperson= models.TextField(max_length=255, null=True)
+
+    def __str__(self):
+        return self.suggestperson
+    

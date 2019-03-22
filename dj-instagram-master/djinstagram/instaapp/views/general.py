@@ -14,7 +14,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import MultipleObjectsReturned
 
 from instaapp.forms import LoginForm, PhotoForm, MemberPhotoForm
-from instaapp.models import Follow, Photo, Member, Comment, Like
+from instaapp.models import Follow, Photo, Member, Comment, Like, Suggestion
 
 from annoying.functions import get_object_or_None
 from operator import attrgetter
@@ -267,23 +267,19 @@ def user_followers(request):
 
     followers = Follow.objects.filter(following__pk=request.user.id)
 
-    # Check if you follow the users who follow you
-    for user in followers:
-        queryset = Follow.objects.filter(
+    #Check if you follow the users who follow you
+    if request.user.is_authenticated:
+        for user in followers:
+            queryset = Follow.objects.filter(
             follower__id=request.user.id,
             following__id=user.follower.id
             )
-        user.is_followed = get_object_or_None(queryset)
-    # x = User.objects.get(pk=request.user.id)
-    # y = User.objects.get(pk=request.POST['uid'])
-    # try:
-    #     follow_obj = Follow.objects.get(follower=x, following=y)
-    #     follow_obj.save()
-    # except MultipleObjectsReturned:
-    #     pass
+            user.is_followed = get_object_or_None(queryset)
+        
+
     
 
-
+    
     return render(request, 'instaapp/user_followers.html', {
         'followers': followers,
         })
@@ -340,3 +336,19 @@ def otherprofile(request, username=None):
         'count': photos_count,
         #'dp_form': upload_prof_pic_form
         })
+
+def suggest(request):
+    
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            
+            if form.is_valid():
+                form = Suggestion(request.POST)
+                text = form.cleaned_data['post']
+                instance = form.save(commit=False)
+                instance.save()
+            return HttpResponseRedirect('instaapp/addsuggest')   
+
+    return render(request, 'instaapp/suggestions.html', {'form': form})
+
+

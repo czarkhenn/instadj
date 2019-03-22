@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Photo, Like, Tag, Follow, Member, Comment
+from .models import Photo, Like, Tag, Follow, Member, Comment, Suggestion
 
 class CommentAdmin(admin.ModelAdmin):
     '''
@@ -36,3 +36,4 @@ admin.site.register(Comment, CommentAdmin)
 
 admin.site.register(Tag)
 admin.site.register(Member)
+admin.site.register(Suggestion)

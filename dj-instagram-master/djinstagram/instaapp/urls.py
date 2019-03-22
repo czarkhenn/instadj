@@ -20,6 +20,7 @@ urlpatterns = [
     url(r'^feed/$', general.feed, name='feed'),
     url(r'^search/$', general.search, name='user_search'),
     url(r'^otherprofile/$', general.otherprofile, name='otherprofile'),
+    url(r'^addsuggest/$', general.suggest, name='suggest'),
  
 
     # AJAX methods
