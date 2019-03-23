@@ -29,6 +29,10 @@ class LikeAdmin(admin.ModelAdmin):
     list_display = ('owner', 'image_tag')
     readonly_fields = ('image_tag',)
 
+class SuggestionAdmin(admin.ModelAdmin):
+
+    list_display = ('owner','text')
+
 admin.site.register(Like, LikeAdmin)
 admin.site.register(Photo, PhotoAdmin)
 admin.site.register(Follow, FollowAdmin)
@@ -36,4 +40,4 @@ admin.site.register(Comment, CommentAdmin)
 
 admin.site.register(Tag)
 admin.site.register(Member)
-admin.site.register(Suggestion)
+admin.site.register(Suggestion, SuggestionAdmin)

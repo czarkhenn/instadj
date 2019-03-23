@@ -13,7 +13,7 @@ from django.contrib.auth.decorators import login_required
 
 from django.core.exceptions import MultipleObjectsReturned
 
-from instaapp.forms import LoginForm, PhotoForm, MemberPhotoForm
+from instaapp.forms import LoginForm, PhotoForm, MemberPhotoForm, SuggestForm
 from instaapp.models import Follow, Photo, Member, Comment, Like, Suggestion
 
 from annoying.functions import get_object_or_None
@@ -327,6 +327,20 @@ def otherprofile(request, username=None):
 
     user_photos = Photo.objects.filter(owner__pk=user.id)
     photos_count = user_photos.count()
+    #suggest = Suggestion.objects.filter(owner_pk=user.id)
+    # x = User.objects.get(pk=request.user.id)
+    
+    text = Suggestion.objects.filter(owner__pk=user.id)
+    # text = Suggestion.filter.values_list('text', flat=True)
+    
+    
+        
+
+
+    
+    
+    
+    
 
     
     return render(request, 'instaapp/otherprofile.html', {
@@ -334,21 +348,19 @@ def otherprofile(request, username=None):
         'user_dp': user_dp,
         'photos': user_photos,
         'count': photos_count,
-        #'dp_form': upload_prof_pic_form
+        'text':text,
         })
 
 def suggest(request):
-    
+    form = SuggestForm()
     if request.user.is_authenticated:
         if request.method == 'POST':
-            
+            form = SuggestForm(request.POST)
             if form.is_valid():
-                form = Suggestion(request.POST)
-                text = form.cleaned_data['post']
                 instance = form.save(commit=False)
+                instance.owner = request.user
                 instance.save()
-            return HttpResponseRedirect('instaapp/addsuggest')   
-
-    return render(request, 'instaapp/suggestions.html', {'form': form})
+                return HttpResponseRedirect('/insta/addsuggest')   
+    return render(request, 'instaapp/suggestions.html', {'form':form})
 
 

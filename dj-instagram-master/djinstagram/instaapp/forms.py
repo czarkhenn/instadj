@@ -30,7 +30,8 @@ class MemberPhotoForm(forms.ModelForm):
         model = Member
         fields = ('image',)
 
-class SuggestForm(forms.Form):
+class SuggestForm(forms.ModelForm):
+
     class Meta:
         model = Suggestion
-        fields = ('suggestperson')
+        fields = ('text', )

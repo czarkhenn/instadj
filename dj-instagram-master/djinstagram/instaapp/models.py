@@ -71,9 +71,14 @@ class Comment(models.Model):
         return self.text
 
 class Suggestion(models.Model):
-
-    suggestperson= models.TextField(max_length=255, null=True)
+    owner = models.ForeignKey(User, null = True, on_delete=models.CASCADE)
+    text = models.TextField(max_length=255, null=True)
 
     def __str__(self):
-        return self.suggestperson
+        return self.text
+    
+    def get_owner(self):
+        return self.owner
+
+      
     
