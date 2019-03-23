@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^search/$', general.search, name='user_search'),
     url(r'^otherprofile/$', general.otherprofile, name='otherprofile'),
     url(r'^addsuggest/$', general.suggest, name='suggest'),
+    url(r'^delsuggest/$', general.delsuggest, name='delsuggest'),
  
 
     # AJAX methods

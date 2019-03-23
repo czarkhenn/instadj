@@ -24,6 +24,7 @@ from .forms import UserRegisterForm
 from django.contrib.auth import get_user_model
 
 
+
 # Create your views here.
 
 def is_authenticated(self):
@@ -329,9 +330,12 @@ def otherprofile(request, username=None):
     photos_count = user_photos.count()
     #suggest = Suggestion.objects.filter(owner_pk=user.id)
     # x = User.objects.get(pk=request.user.id)
-    
+
     text = Suggestion.objects.filter(owner__pk=user.id)
     # text = Suggestion.filter.values_list('text', flat=True)
+
+   
+
     
     
         
@@ -362,5 +366,17 @@ def suggest(request):
                 instance.save()
                 return HttpResponseRedirect('/insta/addsuggest')   
     return render(request, 'instaapp/suggestions.html', {'form':form})
+
+def delsuggest(request, username=None):
+    user = request.user
+    text = Suggestion.objects.filter(owner__pk=user.id)
+
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            instance = Suggestion.objects.filter(owner__pk=user.id)
+            instance.owner = request.user
+            instance.delete()
+            return HttpResponseRedirect('/insta/delsuggest/')
+    return render(request, 'instaapp/delsuggest.html', {'text':text})
 
 

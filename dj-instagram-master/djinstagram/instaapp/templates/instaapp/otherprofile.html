@@ -21,9 +21,18 @@
         </div>
 <br>
 
-    <h3>Suggestions: {% for x in text %}
-            {{x}}
-                    {% endfor %}
+    <h3>Suggested Users: 
+        {% if text %}
+            {% for x in text %}
+                {{x}}
+            {% endfor %}
+            {% else %}
+            Nobody atm...</h3>
+        {% endif %}
+
+        
+        
+
         <br>
         <div class="row">
             
