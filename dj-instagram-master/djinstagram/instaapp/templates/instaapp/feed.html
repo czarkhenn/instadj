@@ -109,7 +109,8 @@
             {% endfor %}
         {% else %}
             <div class="alert alert-info">
-                You are not following any users. <a href="{% url 'instaapp:users' %}">Follow</a> users to view photos.
+                You are not following any users or No post have been uploaded yet. <br>
+                <a href="{% url 'instaapp:users' %}">Follow</a> users to view photos.
             </div>
         {% endif %}
 
