@@ -1,7 +1,7 @@
 Django==2.1
 futures==2.2.0
 pillow
-requests==1.0.4
+requests==2.20.0
 selenium==2.53.6
 tqdm==3.8.0
 django-crispy-forms
