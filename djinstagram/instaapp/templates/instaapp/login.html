@@ -1,0 +1,29 @@
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% include 'instaapp/includes/head.html' %}
+{% include 'instaapp/includes/nav.html' %}
+
+    <div class="col-sm-6 col-sm-offset-3">
+        <h3>Login</h3>
+        <form action="" method="post">
+        {% csrf_token %}
+            {{form|crispy}}
+            <div class="form-group">
+                    <button class="btn btn-primary btn-block" type="submit">Sign In</button> <center><small class="text-muted">Don't have an Account? <a class="ml-2" href="{% url 'instaapp:signup' %}">Sign Up</a></small></center>
+                </div>
+        </form>
+    {% for message in messages %}
+
+                    <div class="alert alert-danger">
+                        <a class="close" href="#" data-dismiss="alert">×</a>
+
+                        {{ message }}
+
+                    </div>
+    {% endfor %}
+
+    </div>
+<!-- <body oncontextmenu="return false;"> -->
+</div>
+
+{% include 'instaapp/includes/foot.html' %}
