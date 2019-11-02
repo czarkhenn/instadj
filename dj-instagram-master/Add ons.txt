@@ -1,6 +1,0 @@
-Able to open on local pc
-Able to share photos and sent to another person
-Unable to save photos for security
-Able to create account and delete account on main page
-Able to delete post
-will be fixing bugs and errors
